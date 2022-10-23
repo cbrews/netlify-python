@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+from pprint import pprint
 from typing import Any
 
 import pytest
@@ -30,6 +31,15 @@ def test_get_field__not_found():
 
     not_found_field = BasicClass.get_field("not_found_field")
     assert not_found_field is None
+
+
+def test_field_validation_error():
+    error = FieldValidationError(field="test", type_=str, value=None)
+    pprint(error)
+    assert str(error) is not None
+    assert error.field == "test"
+    assert error.type == str
+    assert error.value is None
 
 
 def test_parse_field_value__str():

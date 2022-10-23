@@ -106,24 +106,26 @@ def _parse_field_type(_type: type, value: Any) -> Any:
         raise ValueError()  # Raise if no type succeeds to be matched
     if isclass(_type) and issubclass(_type, ExtendedDataclass):
         return _type.from_dict(value)
-    if _get_generic_typeclass(_type) == list:
+    if _type == list or _get_generic_typeclass(_type) == list:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
         types = getattr(_type, "__args__")
         return [_parse_field_type(types[0], i) for i in value]
-    if _get_generic_typeclass(_type) == set:
+    if _type == set or _get_generic_typeclass(_type) == set:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
         types = getattr(_type, "__args__")
         return {_parse_field_type(types[0], i) for i in value}
-    if _get_generic_typeclass(_type) == tuple:
+    if _type == tuple or _get_generic_typeclass(_type) == tuple:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
         return tuple(
             _parse_field_type(_type, value[i])
             for (i, _type) in enumerate(getattr(_type, "__args__"))
         )
-    if _get_generic_typeclass(_type) == dict and isinstance(value, dict):
+    if (_type == dict or _get_generic_typeclass(_type) == dict) and isinstance(
+        value, dict
+    ):
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
         types = getattr(_type, "__args__")

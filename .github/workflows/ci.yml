@@ -36,5 +36,5 @@ jobs:
           python -m black . --check
           python -m pylint netlify tests --rcfile=.pylintrc
           python -m mypy .
-          python -m pytest --cov=netlify
+          python -m pytest --cov=netlify --cov-report term-missing tests/
           
