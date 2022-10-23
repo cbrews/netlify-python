@@ -1,5 +1,6 @@
 import dataclasses
 import datetime
+from pprint import pprint
 from typing import Any
 
 import pytest
@@ -30,6 +31,15 @@ def test_get_field__not_found():
 
     not_found_field = BasicClass.get_field("not_found_field")
     assert not_found_field is None
+
+
+def test_field_validation_error():
+    error = FieldValidationError(field="test", type_=str, value=None)
+    pprint(error)
+    assert str(error) is not None
+    assert error.field == "test"
+    assert error.type == str
+    assert error.value is None
 
 
 def test_parse_field_value__str():
@@ -86,8 +96,8 @@ def test_parse_field_value__bool():
     field_bool = BasicClass.get_field("field_bool")
     assert field_bool is not None
 
-    assert parse_field_value(field_bool, False) == False
-    assert parse_field_value(field_bool, True) == True
+    assert parse_field_value(field_bool, False) is False
+    assert parse_field_value(field_bool, True) is True
 
     with pytest.raises(FieldValidationError):
         assert parse_field_value(field_bool, None)
@@ -101,9 +111,9 @@ def test_parse_field_value__optional_primitive():
     field_bool = BasicClass.get_field("field_bool")
     assert field_bool is not None
 
-    assert parse_field_value(field_bool, True) == True
-    assert parse_field_value(field_bool, False) == False
-    assert parse_field_value(field_bool, None) == None
+    assert parse_field_value(field_bool, True) is True
+    assert parse_field_value(field_bool, False) is False
+    assert parse_field_value(field_bool, None) is None
 
 
 def test_parse_field_value__datetime_from_str():
@@ -116,7 +126,6 @@ def test_parse_field_value__datetime_from_str():
 
     converted_datetime = parse_field_value(field_datetime, "2022-01-01T00:00:00Z")
     assert isinstance(converted_datetime, datetime.datetime)
-    datetime.datetime.tzinfo
     assert converted_datetime == datetime.datetime(2022, 1, 1, 0, 0, 0, tzinfo=tzutc())
 
     with pytest.raises(FieldValidationError):
@@ -218,7 +227,7 @@ def test_parse_field_value__list_optional():
 
     assert parse_field_value(field_list, []) == []
     assert parse_field_value(field_list, ["test", "test2"]) == ["test", "test2"]
-    assert parse_field_value(field_list, None) == None
+    assert parse_field_value(field_list, None) is None
 
 
 def test_parse_field_value__tuple_generic():
@@ -258,7 +267,7 @@ def test_parse_field_value__tuple_optional():
     assert field_tuple is not None
 
     assert parse_field_value(field_tuple, ("test", 1)) == ("test", 1)
-    assert parse_field_value(field_tuple, None) == None
+    assert parse_field_value(field_tuple, None) is None
 
 
 def test_parse_field_value__set_generic():
@@ -301,7 +310,7 @@ def test_parse_field_value__set_optional():
     assert field_set is not None
 
     assert parse_field_value(field_set, set([1, 2])) == set([1, 2])
-    assert parse_field_value(field_set, None) == None
+    assert parse_field_value(field_set, None) is None
 
 
 def test_parse_field_value__dict_generic():
@@ -344,7 +353,7 @@ def test_parse_field_value__dict_optional():
     assert field_dict is not None
 
     assert parse_field_value(field_dict, {"key": "value"}) == {"key": "value"}
-    assert parse_field_value(field_dict, None) == None
+    assert parse_field_value(field_dict, None) is None
 
 
 def test_parse_field_value__subclass():
@@ -380,7 +389,7 @@ def test_parse_field_value__subclass_optional():
     assert isinstance(subclass, SubBasicClass)
     assert subclass.field_str == "test"
 
-    assert parse_field_value(field_subclass, None) == None
+    assert parse_field_value(field_subclass, None) is None
 
 
 def test_parse_field_value__any():
@@ -393,8 +402,8 @@ def test_parse_field_value__any():
 
     assert parse_field_value(field_any, "str") == "str"
     assert parse_field_value(field_any, 1) == 1
-    assert parse_field_value(field_any, True) == True
-    assert parse_field_value(field_any, None) == None
+    assert parse_field_value(field_any, True) is True
+    assert parse_field_value(field_any, None) is None
     assert parse_field_value(field_any, ["str"]) == ["str"]
 
 
@@ -431,10 +440,11 @@ def test_extended_dataclass_from_dict__valid():
     )
 
     assert basic_class_instance.field_str == "my_str"
-    assert basic_class_instance.field_bool == False
+    assert basic_class_instance.field_bool is False
     assert basic_class_instance.field_float == 100.0
     assert basic_class_instance.field_int == 39
     assert basic_class_instance.field_optional_int is None
+    assert basic_class_instance.field_sub_class is not None
     assert basic_class_instance.field_sub_class.field_int == 55
     assert basic_class_instance.field_optional_list == [1]
     assert basic_class_instance.field_required_list == [10]
