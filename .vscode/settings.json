@@ -1,11 +1,9 @@
 {
     "editor.tabSize": 4,
-    "explorer.excludeGitIgnore": true,
     "editor.formatOnSave": true,
     "editor.trimAutoWhitespace": true,
     "editor.codeActionsOnSave": {
         "source.organizeImports": true,
-        
     },
     "python.formatting.provider": "black",
     "python.linting.lintOnSave": true,
@@ -14,4 +12,5 @@
     ],
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "explorer.excludeGitIgnore": true,
 }

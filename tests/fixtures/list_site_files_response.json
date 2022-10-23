@@ -1,0 +1,20 @@
+[
+    {
+        "id": "/index.html",
+        "path": "/index.html",
+        "sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "mime_type": "text/html",
+        "size": 12345,
+        "site_id": "11111111-1111-1111-1111-111111111111",
+        "deploy_id": "39485739285945"
+    },
+    {
+        "id": "/other.html",
+        "path": "/other.html",
+        "sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "mime_type": "text/html",
+        "size": 23456,
+        "site_id": "11111111-1111-1111-1111-111111111111",
+        "deploy_id": "39485739285945"
+    }
+]

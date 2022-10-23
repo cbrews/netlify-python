@@ -1,0 +1,15 @@
+{
+    "affiliate_id": "",
+    "avatar_url": "https://github.com",
+    "created_at": "2022-01-01T12:00:00.000",
+    "email": "example@example.com",
+    "full_name": "Marty McFly",
+    "id": "1234567890abcdef",
+    "last_login": "2022-01-01T12:00:00.000",
+    "login_providers": [
+        "password"
+    ],
+    "onboarding_process": null,
+    "site_count": 100,
+    "uid": null
+}

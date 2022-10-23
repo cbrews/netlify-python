@@ -95,10 +95,10 @@ def _parse_field_type(_type: type, value: Any) -> Any:
     if _type == Any:
         return value
     if _type.__class__ == UnionType:
-        if value is None and NoneType in _type.__args__:
+        if value is None and NoneType in getattr(_type, "__args__"):
             return None
         # Recursive handling for UnionType, handle first matching type
-        for subtype in _type.__args__:
+        for subtype in getattr(_type, "__args__"):
             try:
                 return _parse_field_type(subtype, value)
             except (TypeError, ValueError):
@@ -106,27 +106,29 @@ def _parse_field_type(_type: type, value: Any) -> Any:
         raise ValueError()  # Raise if no type succeeds to be matched
     if isclass(_type) and issubclass(_type, ExtendedDataclass):
         return _type.from_dict(value)
-    if _get_generic_typeclass(_type) == list:
+    if _type == list or _get_generic_typeclass(_type) == list:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
-        types = _type.__args__
+        types = getattr(_type, "__args__")
         return [_parse_field_type(types[0], i) for i in value]
-    if _get_generic_typeclass(_type) == set:
+    if _type == set or _get_generic_typeclass(_type) == set:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
-        types = _type.__args__
+        types = getattr(_type, "__args__")
         return {_parse_field_type(types[0], i) for i in value}
-    if _get_generic_typeclass(_type) == tuple:
+    if _type == tuple or _get_generic_typeclass(_type) == tuple:
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
         return tuple(
             _parse_field_type(_type, value[i])
-            for (i, _type) in enumerate(_type.__args__)
+            for (i, _type) in enumerate(getattr(_type, "__args__"))
         )
-    if _get_generic_typeclass(_type) == dict and isinstance(value, dict):
+    if (_type == dict or _get_generic_typeclass(_type) == dict) and isinstance(
+        value, dict
+    ):
         if _is_generic_type(_type):
             return _validated_instance(_type, value)
-        types = _type.__args__
+        types = getattr(_type, "__args__")
         return {
             _parse_field_type(types[0], dict_key): _parse_field_type(types[1], dict_val)
             for (dict_key, dict_val) in value.items()
