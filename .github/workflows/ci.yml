@@ -33,12 +33,11 @@ jobs:
         run: |
           poetry export --with dev --without-hashes -f requirements.txt --output requirements.txt
           pip install -r requirements.txt
-      - name: CI - Format & Linting Checks
+      - name: CI - Format, Lint, Test
         run: |
           python -m isort . --diff --check-only
           python -m black . --check
           python -m pylint netlify tests --rcfile=.pylintrc
           python -m mypy .
-      - name: CI - Tests
-        run: |
-          python -m pytest --cov=netlify
+          python -m pytest
+          
