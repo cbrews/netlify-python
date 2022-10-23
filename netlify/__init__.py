@@ -110,7 +110,7 @@ class NetlifyClient:
             base_url=self.base_url,
             auth=BearerAuth(self.access_token),
             headers=prepared_headers,
-            timeout=self.timeout,
+            timeout=timeout or self.timeout,
         ) as client:
             response = client.request(
                 method,
@@ -119,11 +119,12 @@ class NetlifyClient:
                 data=data,
                 files=files,
                 json=json,
+                auth=BearerAuth(self.access_token),
                 params=params,
                 cookies=None,
-                headers=headers,
+                headers=None,
                 follow_redirects=False,
-                timeout=timeout or self.timeout,
+                timeout=None,
                 extensions=None,
                 **kwargs,
             )
