@@ -26,9 +26,6 @@ jobs:
         uses: snok/install-poetry@v1
         with:
           virtualenvs-create: false
-      - name: Test Poetry
-        run: |
-          poetry --version
       - name: Install dependencies
         run: |
           poetry export --with dev --without-hashes -f requirements.txt --output requirements.txt
@@ -39,5 +36,5 @@ jobs:
           python -m black . --check
           python -m pylint netlify tests --rcfile=.pylintrc
           python -m mypy .
-          python -m pytest
+          python -m pytest --cov=netlify
           
