@@ -13,11 +13,12 @@ dependencies = [
   "python-dateutil>=2.8.2",
 ]
 classifiers = [
-  "Development Status :: 2 - Pre-Alpha",
+  "Development Status :: 1 - Planning",
   "Intended Audience :: Developers",
   "Topic :: Software Development :: Libraries",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "License :: OSI Approved :: MIT License",
 ]
 keywords = [
   "http", 

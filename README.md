@@ -1,6 +1,7 @@
 # Netlify Python Client
 
 ![PyPI - Python Version](https://img.shields.io/pypi/pyversions/netlify-python)
+![PyPI - License](https://img.shields.io/pypi/l/netlify-python)
 
 This is a work in progress package designed to wrap the [Netlify APIs](https://docs.netlify.com/api/get-started/) for python client users.
 
