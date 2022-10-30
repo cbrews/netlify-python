@@ -7,7 +7,7 @@ from netlify.auth.bearer import BearerAuth
 from netlify.enums import ListSitesFilter
 from netlify.schemas import Site, User
 
-__version__ = "0.1.0"
+__version__ = "0.0.1"
 
 
 class NetlifyClient:
