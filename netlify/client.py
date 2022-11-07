@@ -32,7 +32,7 @@ class NetlifyClient:
 
     # Ticket
 
-    def create_ticket(self, client_id: str):
+    def create_ticket(self, client_id: str) -> None:
         """
         POST /oauth/tickets
 
@@ -40,7 +40,7 @@ class NetlifyClient:
         """
         raise NotImplementedError("PUT /oauth/tickets is not implemented.")
 
-    def show_ticket(self, ticket_id: str):
+    def show_ticket(self, ticket_id: str) -> None:
         """
         GET /oauth/tickets/{ticket_id}
 
@@ -50,7 +50,7 @@ class NetlifyClient:
 
     # Access token
 
-    def exchange_ticket(self, ticket_id):
+    def exchange_ticket(self, ticket_id: str) -> None:
         """
         POST /oauth/tickets/{ticket_id}/exchange
 
@@ -74,7 +74,7 @@ class NetlifyClient:
 
     # Accounts
 
-    def cancel_account(self, account_id: str):
+    def cancel_account(self, account_id: str) -> None:
         """
         DELETE /accounts/{account_id}
 
@@ -89,7 +89,7 @@ class NetlifyClient:
         payment_method_id: str | None,
         period: Period | None,
         extra_seats_block: int | None,
-    ):
+    ) -> None:
         """
         POST /accounts
 
@@ -97,7 +97,7 @@ class NetlifyClient:
         """
         raise NotImplementedError("POST /accounts is not implemented.")
 
-    def get_account(self, account_id: str):
+    def get_account(self, account_id: str) -> None:
         """
         GET /accounts/{account_id}
 
@@ -105,7 +105,7 @@ class NetlifyClient:
         """
         raise NotImplementedError(f"GET /accounts/{account_id} is not implemented.")
 
-    def list_accounts_for_user(self):
+    def list_accounts_for_user(self) -> None:
         """
         GET /accounts
 
@@ -113,7 +113,7 @@ class NetlifyClient:
         """
         raise NotImplementedError("GET /accounts is not implemented.")
 
-    def update_account(self, account_id: str):
+    def update_account(self, account_id: str) -> None:
         """
         PUT /accounts/{account_id}
 
@@ -123,7 +123,7 @@ class NetlifyClient:
 
     # Member
 
-    def add_member_to_account(self, account_slug: str):
+    def add_member_to_account(self, account_slug: str) -> None:
         """
         POST /{account_slug}/members
 
@@ -131,7 +131,7 @@ class NetlifyClient:
         """
         raise NotImplementedError(f"POST /{account_slug}/members is not implemented.")
 
-    def list_members_for_account(self, account_slug: str):
+    def list_members_for_account(self, account_slug: str) -> None:
         """
         GET /{account_slug}/members
 
@@ -141,7 +141,7 @@ class NetlifyClient:
 
     # Access type
 
-    def list_account_types_for_user(self):
+    def list_account_types_for_user(self) -> None:
         """
         GET /accounts/types
 
@@ -151,7 +151,7 @@ class NetlifyClient:
 
     # Payment method
 
-    def list_payment_methods_for_user(self):
+    def list_payment_methods_for_user(self) -> None:
         """
         GET /billing/payment_methods
 
@@ -161,7 +161,7 @@ class NetlifyClient:
 
     # Audit log
 
-    def list_account_audit_events(self, account_id: str):
+    def list_account_audit_events(self, account_id: str) -> None:
         """
         GET /accounts/{account_id}/audit
 
@@ -249,7 +249,7 @@ class NetlifyClient:
         )
         return [Site.from_dict(site) for site in response]
 
-    def unlink_site_repo(self, site_id: str):
+    def unlink_site_repo(self, site_id: str) -> None:
         """
         PUT /sites/{site_id}/unlink_repo
         Not Implemented
@@ -270,7 +270,7 @@ class NetlifyClient:
 
     # Environment variables
 
-    def create_env_vars(self, account_id: str):
+    def create_env_vars(self, account_id: str) -> None:
         """
         POST /accounts/{account_id}/env
         Not Implemented
@@ -279,7 +279,7 @@ class NetlifyClient:
             f"POST /accounts/{account_id}/env is not implemented."
         )
 
-    def delete_env_var(self, account_id: str, key: str):
+    def delete_env_var(self, account_id: str, key: str) -> None:
         """
         DELETE /accounts/{account_id}/env/{key}
         Not Implemented
@@ -288,7 +288,7 @@ class NetlifyClient:
             f"DELETE /accounts/{account_id}/env/{key} is not implemented."
         )
 
-    def delete_env_var_value(self, account_id: str, key: str, id: str):
+    def delete_env_var_value(self, account_id: str, key: str, id: str) -> None:
         """
         DELETE /accounts/{account_id}/env/{key}/value/{id}
         Not Implemented
@@ -297,7 +297,7 @@ class NetlifyClient:
             f"DELETE /accounts/{account_id}/env/{key}/value{id} is not implemented."
         )
 
-    def get_env_var(self, account_id: str, key: str):
+    def get_env_var(self, account_id: str, key: str) -> None:
         """
         GET /accounts/{account_id}/env/{key}
         Not Implemented
@@ -306,14 +306,14 @@ class NetlifyClient:
             f"GET /accounts/{account_id}/env/{key} is not implemented."
         )
 
-    def get_env_vars(self, account_id: str):
+    def get_env_vars(self, account_id: str) -> None:
         """
         GET /accounts/{account_id}/env
         Not Implemented
         """
         raise NotImplementedError(f"GET /accounts/{account_id}/env is not implemented.")
 
-    def set_env_var_value(self, account_id: str, key: str):
+    def set_env_var_value(self, account_id: str, key: str) -> None:
         """
         PATCH /accounts/{account_id}/env/{key}
         Not Implemented
@@ -322,7 +322,7 @@ class NetlifyClient:
             f"PATCH /accounts/{account_id}/env/{key} is not implemented."
         )
 
-    def update_env_var(self, account_id: str, key: str):
+    def update_env_var(self, account_id: str, key: str) -> None:
         """
         PUT /accounts/{account_id}/env/{key}
         Not Implemented
@@ -347,32 +347,32 @@ class NetlifyClient:
         response = self._send("GET", f"/sites/{site_id}/files")
         return [SiteFile.from_dict(site_file) for site_file in response]
 
-    def upload_deploy_file(self):
+    def upload_deploy_file(self) -> None:
         pass
 
     # Metadata
 
-    def get_site_metadata(self):
+    def get_site_metadata(self) -> None:
         raise NotImplementedError()
 
-    def update_site_metadata(self):
+    def update_site_metadata(self) -> None:
         raise NotImplementedError()
 
     # Snippet
 
-    def create_site_snippet(self):
+    def create_site_snippet(self) -> None:
         raise NotImplementedError()
 
-    def delete_site_snippet(self):
+    def delete_site_snippet(self) -> None:
         raise NotImplementedError()
 
-    def get_site_snippet(self):
+    def get_site_snippet(self) -> None:
         raise NotImplementedError()
 
-    def list_site_snippets(self):
+    def list_site_snippets(self) -> None:
         raise NotImplementedError()
 
-    def update_site_snippet(self):
+    def update_site_snippet(self) -> None:
         raise NotImplementedError()
 
     #####################
