@@ -18,7 +18,7 @@ class NetlifyClient:
         self,
         access_token: str,
         base_url: str = "https://api.netlify.com/api/v1",
-        user_agent: str = f"NetlifyPythonClient/0.0.1",
+        user_agent: str = "NetlifyPythonClient/0.0.1",
         timeout: float = 60.000,
     ):
         self.access_token = access_token
@@ -38,7 +38,7 @@ class NetlifyClient:
 
         Not implemented
         """
-        raise NotImplementedError(f"PUT /oauth/tickets is not implemented.")
+        raise NotImplementedError("PUT /oauth/tickets is not implemented.")
 
     def show_ticket(self, ticket_id: str):
         """
@@ -95,7 +95,7 @@ class NetlifyClient:
 
         Not implemented
         """
-        raise NotImplementedError(f"POST /accounts is not implemented.")
+        raise NotImplementedError("POST /accounts is not implemented.")
 
     def get_account(self, account_id: str):
         """
@@ -111,7 +111,7 @@ class NetlifyClient:
 
         Not implemented
         """
-        raise NotImplementedError(f"GET /accounts is not implemented.")
+        raise NotImplementedError("GET /accounts is not implemented.")
 
     def update_account(self, account_id: str):
         """
@@ -147,7 +147,7 @@ class NetlifyClient:
 
         Not implemented
         """
-        raise NotImplementedError(f"GET /accounts/types is not implemented.")
+        raise NotImplementedError("GET /accounts/types is not implemented.")
 
     # Payment method
 
@@ -157,7 +157,7 @@ class NetlifyClient:
 
         Not implemented
         """
-        raise NotImplementedError(f"GET /billing/payment_methods is not implemented.")
+        raise NotImplementedError("GET /billing/payment_methods is not implemented.")
 
     # Audit log
 
@@ -255,7 +255,8 @@ class NetlifyClient:
         Not Implemented
         """
         raise NotImplementedError(
-            f"PUT /sites/{site_id}/unlink_repo is a beta endpoint and is not implemented."
+            f"PUT /sites/{site_id}/unlink_repo is a "
+            "beta endpoint and is not implemented."
         )
 
     def update_site(self, site_id: str, site: Site) -> Site:

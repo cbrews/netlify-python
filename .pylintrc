@@ -160,7 +160,8 @@ disable=raw-checker-failed,
         too-many-instance-attributes,
         missing-function-docstring,
         too-many-branches,
-        too-many-return-statements
+        too-many-return-statements,
+        too-many-public-methods
 
 # Enable the message, report, category or checker with the given id(s). You can
 # either give multiple identifier separated by comma (,) or put this option
@@ -448,7 +449,7 @@ exclude-too-few-public-methods=
 ignored-parents=
 
 # Maximum number of arguments for function / method.
-max-args=5
+max-args=10
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7
@@ -465,17 +466,11 @@ max-locals=15
 # Maximum number of parents for a class (see R0901).
 max-parents=7
 
-# Maximum number of public methods for a class (see R0904).
-max-public-methods=20
-
 # Maximum number of return / yield for function / method body.
 max-returns=6
 
 # Maximum number of statements in function / method body.
 max-statements=50
-
-# Minimum number of public methods for a class (see R0903).
-min-public-methods=2
 
 
 [STRING]
