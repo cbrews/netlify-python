@@ -1,0 +1,11 @@
+[report]
+fail_under = 90
+exclude_lines = 
+    pragma: no cover
+    raise NotImplementedError
+    def __repr__
+    raise AssertionError
+    if 0:
+    if __name__ == .__main__.:
+    class .*\bProtocol\):
+    @(abc\.)?abstractmethod

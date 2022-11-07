@@ -29,5 +29,5 @@ jobs:
       - name: mypy
         run: python -m mypy .
       - name: pytest
-        run: python -m pytest --cov=netlify --cov-report term-missing tests/
+        run: python -m pytest --cov=netlify --cov-report=term-missing tests/
           
