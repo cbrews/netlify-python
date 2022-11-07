@@ -17,12 +17,21 @@ class User(EDC):
     created_at: datetime.datetime
     last_login: datetime.datetime | None
     login_providers: list[str]
-    onboarding_process: dict[str, str]
+    onboarding_process: dict[str, str] | None
+
+
+@dataclass
+class SiteFile(EDC):
+    id: str
+    path: str
+    sha: str
+    mime_type: str
+    size: int
 
 
 @dataclass
 class SiteCapabilities(EDC):
-    large_media_enabled: bool
+    large_media_enabled: bool | None
 
 
 @dataclass
@@ -46,7 +55,7 @@ class SiteDeploy(EDC):
     deploy_ssl_url: str
     screenshot_url: str | None
     review_id: float | None
-    draft: bool
+    draft: bool | None
     required: list[str]
     required_functions: list[str]
     error_message: str | None
@@ -67,26 +76,32 @@ class SiteDeploy(EDC):
 
 
 @dataclass
+class GenericResponse(EDC):
+    code: int
+    message: str
+
+
+@dataclass
 class DefaultHooksData(EDC):
     access_token: str
 
 
 @dataclass
 class SiteRepoInfo(EDC):
-    id: int
-    provider: str
+    id: int | None
+    provider: str | None
     deploy_key_id: str | None
-    repo_path: str
+    repo_path: str | None
     dir: str | None
     functions_dir: str | None
     cmd: str | None
-    allowed_branches: list[str]
-    public_repo: bool
+    allowed_branches: list[str] | None
+    public_repo: bool | None
     private_logs: bool | None
-    repo_url: str
-    env: dict[str, str]
+    repo_url: str | None
+    env: dict[str, str] | None
     installation_id: int | None
-    stop_builds: bool
+    stop_builds: bool | None
 
 
 @dataclass
