@@ -36,3 +36,16 @@ def test_client_get_site(httpx_mock, site_response: bytes, client: NetlifyClient
     assert result.id == "11111111-1111-1111-1111-111111111111"
     assert result.url == "https://mcfly-site.netlify.app"
     assert result.account_name == "Marty McFly's team"
+
+
+def test_client_list_sites(
+    httpx_mock, list_sites_response: bytes, client: NetlifyClient
+):
+    httpx_mock.add_response(content=list_sites_response)
+
+    result = client.list_sites()
+
+    assert len(result) == 1
+    assert result[0].id == "11111111-1111-1111-1111-111111111111"
+    assert result[0].url == "https://mcfly-site.netlify.app"
+    assert result[0].account_name == "Marty McFly's team"

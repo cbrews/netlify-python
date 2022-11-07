@@ -18,3 +18,7 @@ def current_user_response() -> Generator[bytes, None, None]:
 @pytest.fixture
 def site_response() -> Generator[bytes, None, None]:
     yield fixture_from_file("site_response.json")
+
+@pytest.fixture
+def list_sites_response() -> Generator[bytes, None, None]:
+    yield fixture_from_file("list_sites_response.json")

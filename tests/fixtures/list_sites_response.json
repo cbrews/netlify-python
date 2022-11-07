@@ -1,0 +1,122 @@
+[
+    {
+        "account_name": "Marty McFly's team",
+        "account_slug": "mcfly",
+        "admin_url": "https://app.netlify.com/sites/mcfly-site",
+        "build_image": "focal",
+        "build_settings": {
+            "allowed_branches": null,
+            "cmd": null,
+            "deploy_key_id": null,
+            "dir": null,
+            "env": null,
+            "functions_dir": null,
+            "id": null,
+            "installation_id": null,
+            "private_logs": null,
+            "provider": null,
+            "public_repo": null,
+            "repo_path": null,
+            "repo_url": null,
+            "stop_builds": null
+        },
+        "capabilities": {
+            "asset_acceleration": true,
+            "branch_deploy": true,
+            "cdn_propagation": "partial",
+            "cdn_tier": "reg",
+            "domain_aliases": true,
+            "form_processing": true,
+            "geo_ip": true,
+            "id": "nf_team_dev",
+            "ipv6_domain": "cdn.makerloop.com",
+            "managed_dns": true,
+            "prerendering": true,
+            "proxying": true,
+            "rate_cents": 0,
+            "secure_site": false,
+            "secure_site_context": false,
+            "split_testing": true,
+            "ssl": "custom",
+            "sso_secure_site": false,
+            "title": "Netlify Team Free",
+            "yearly_rate_cents": 0
+        },
+        "created_at": "2022-01-01T00:00:00.000Z",
+        "custom_domain": "",
+        "default_hooks_data": null,
+        "deploy_hook": null,
+        "deploy_url": "http://1111111111111111--mcfly-site.netlify.app",
+        "domain_aliases": [],
+        "force_ssl": true,
+        "git_provider": null,
+        "id": "11111111-1111-1111-1111-111111111111",
+        "id_domain": "11111111-1111-1111-1111-111111111111.netlify.app",
+        "managed_dns": true,
+        "name": "mcfly-site",
+        "notification_email": null,
+        "password": null,
+        "plan": "nf_team_dev",
+        "prerender": null,
+        "processing_settings": {
+            "css": {
+                "bundle": true,
+                "minify": true
+            },
+            "html": {
+                "pretty_urls": true
+            },
+            "images": {
+                "optimize": true
+            },
+            "js": {
+                "bundle": true,
+                "minify": true
+            },
+            "skip": true
+        },
+        "published_deploy": {
+            "admin_url": "https://app.netlify.com/sites/mcfly-site",
+            "branch": null,
+            "build_id": null,
+            "commit_ref": null,
+            "commit_url": null,
+            "context": "production",
+            "created_at": "2022-01-01T00:00:00",
+            "deploy_ssl_url": "https://111111111111111111111111--mcfly-site.netlify.app",
+            "deploy_url": "http://111111111111111111111111--mcfly-site.netlify.app",
+            "draft": null,
+            "error_message": null,
+            "framework": null,
+            "function_schedules": [],
+            "id": "111111111111111111111111",
+            "locked": null,
+            "name": "mcfly-site",
+            "published_at": "2022-01-01T00:00:00.000Z",
+            "required": [],
+            "required_functions": [],
+            "review_id": null,
+            "review_url": null,
+            "screenshot_url": "https://app.cloudfront.net/111111111111111111111111/screenshot.png",
+            "site_capabilities": {
+                "large_media_enabled": null
+            },
+            "site_id": "11111111-1111-1111-1111-111111111111",
+            "skipped": null,
+            "ssl_url": "https://mcfly-site.netlify.app",
+            "state": "ready",
+            "title": null,
+            "updated_at": "2022-01-01T00:00:00.000Z",
+            "url": "https://mcfly-site.netlify.app",
+            "user_id": "111111111111111111111111"
+        },
+        "screenshot_url": "https://app.cloudfront.net/111111111111111111111111/screenshot.png",
+        "session_id": null,
+        "ssl": true,
+        "ssl_url": "https://mcfly-site.netlify.app",
+        "state": "current",
+        "updated_at": "2022-01-01T00:00:00.000Z",
+        "url": "https://mcfly-site.netlify.app",
+        "user_id": "111111111111111111111111"
+    }
+]
