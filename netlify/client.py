@@ -134,14 +134,14 @@ class NetlifyClient:
         POST /sites/{site_id}/deploys
         """
         with open(zip_file_path, "rb") as fd:
-            data = fd.read()
+            file_bytes = fd.read()
 
         response = self._send(
             "GET",
             f"/sites/{site_id}/deploys",
             headers={"Content-Type": "application/zip"},
             params={"title": title},
-            data=data,
+            content=file_bytes,
         )
         return SiteDeploy.from_dict(response)
 
