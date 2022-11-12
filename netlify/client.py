@@ -4,7 +4,7 @@ from typing import Any, Iterable, Mapping, Sequence
 import httpx
 
 from netlify.auth.bearer import BearerAuth
-from netlify.enums import ListSitesFilter, Period
+from netlify.enums import ListSitesFilter
 from netlify.schemas import GenericResponse, Site, SiteDeploy, SiteFile, User
 
 
