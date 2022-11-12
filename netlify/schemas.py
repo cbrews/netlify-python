@@ -72,7 +72,7 @@ class SiteDeploy(EDC):
     review_url: str | None
     site_capabilities: SiteCapabilities
     framework: str | None
-    function_schedules: list
+    function_schedules: list[FunctionSchedules]
 
 
 @dataclass
