@@ -18,7 +18,7 @@ class NetlifyClient:
         self,
         access_token: str,
         base_url: str = "https://api.netlify.com/api/v1",
-        user_agent: str = "NetlifyPythonClient/0.0.2",
+        user_agent: str = "NetlifyPythonClient/0.0.3",
         timeout: float = 60.000,
     ):
         self.access_token = access_token
@@ -137,7 +137,7 @@ class NetlifyClient:
             file_bytes = fd.read()
 
         response = self._send(
-            "GET",
+            "POST",
             f"/sites/{site_id}/deploys",
             headers={"Content-Type": "application/zip"},
             params={"title": title},
