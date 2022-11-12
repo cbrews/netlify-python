@@ -13,7 +13,7 @@ def test_bearer_auth():
     request = MockRequest(headers={})
 
     # Run auth generator
-    generator = bearer_auth.auth_flow(request)
+    generator = bearer_auth.auth_flow(request)  # type: ignore[arg-type]
     result = generator.__next__()
 
     assert result.headers["Authorization"] == "Bearer test-token"

@@ -444,6 +444,7 @@ def test_extended_dataclass_from_dict__valid():
     assert basic_class_instance.field_float == 100.0
     assert basic_class_instance.field_int == 39
     assert basic_class_instance.field_optional_int is None
+    assert basic_class_instance.field_sub_class is not None
     assert basic_class_instance.field_sub_class.field_int == 55
     assert basic_class_instance.field_optional_list == [1]
     assert basic_class_instance.field_required_list == [10]
