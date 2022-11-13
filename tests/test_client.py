@@ -27,7 +27,7 @@ def test_client_json_error(httpx_mock, client: NetlifyClient):
     )
 
     with pytest.raises(NetlifyException) as excinfo:
-        client._send("GET", "/bad_url")
+        client._send("GET", "/bad_url")  # pylint: disable=protected-access
 
     netlify_exception = excinfo.value
 
@@ -44,7 +44,7 @@ def test_client_unhandled_error(httpx_mock, client: NetlifyClient):
     )
 
     with pytest.raises(HTTPStatusError):
-        client._send("GET", "/bad_url")
+        client._send("GET", "/bad_url")  # pylint: disable=protected-access
 
 
 def test_get_current_user(
@@ -62,9 +62,7 @@ def test_get_current_user(
 def test_delete_site(httpx_mock, client: NetlifyClient):
     httpx_mock.add_response(content=b"", status_code=204)
 
-    result = client.delete_site("11111111-1111-1111-1111-111111111111")
-
-    assert result is None
+    client.delete_site("11111111-1111-1111-1111-111111111111")
 
 
 def test_get_site(httpx_mock, site_response: bytes, client: NetlifyClient):

@@ -1,4 +1,3 @@
-import dataclasses
 from typing import Any, Iterable, Mapping, Sequence
 
 import httpx
@@ -37,7 +36,7 @@ class NetlifyClient:
         """
         DELETE /sites/{site_id}
         """
-        self._send("DELETE", f"/sites/{site_id}")
+        return self._send("DELETE", f"/sites/{site_id}")
 
     def get_site(self, site_id: str) -> Site:
         """
