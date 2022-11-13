@@ -57,7 +57,7 @@ class SiteDeploy(EDC):
     review_id: float | None
     draft: bool | None
     required: list[str]
-    required_functions: list[str]
+    required_functions: list[str] | None
     error_message: str | None
     branch: str | None
     commit_ref: str | None

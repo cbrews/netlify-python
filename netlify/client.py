@@ -18,7 +18,7 @@ class NetlifyClient:
         self,
         access_token: str,
         base_url: str = "https://api.netlify.com/api/v1",
-        user_agent: str = "NetlifyPythonClient/0.0.3",
+        user_agent: str = "NetlifyPythonClient/0.0.4",
         timeout: float = 60.000,
     ):
         self.access_token = access_token
