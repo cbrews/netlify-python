@@ -1,4 +1,4 @@
-# Netlify Python Client
+# Netlify Python Client SDK
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/cbrews/netlify-python?label=netlify-python)
 [![CI](https://github.com/cbrews/netlify-python/actions/workflows/ci.yml/badge.svg)](https://github.com/cbrews/netlify-python/actions/workflows/ci.yml)
