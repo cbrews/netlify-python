@@ -46,6 +46,7 @@ build = [
 requires = ['hatchling']
 build-backend = 'hatchling.build'
 
+
 [tool.hatch.version]
 path = "netlify/__init__.py"
 
@@ -58,3 +59,36 @@ include = [
 
 [tool.isort]
 profile = "black"
+
+
+[tool.mypy]
+python_version = "3.10"
+
+warn_unused_configs = true
+warn_redundant_casts = true
+
+strict_optional = true
+check_untyped_defs = true
+disallow_untyped_defs = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disallow_untyped_defs = false
+
+
+[tool.coverage.run]
+omit = [
+  "*/__main__.py"
+]
+
+[tool.coverage.report]
+fail_under = 100
+exclude_lines = [
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "def __repr__",
+  "raise AssertionError",
+  "if 0:",
+  "if __name__ == .__main__.:",
+  "@(abc.)?abstractmethod",
+]

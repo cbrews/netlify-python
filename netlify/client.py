@@ -5,7 +5,8 @@ import httpx
 
 from netlify.auth.bearer import BearerAuth
 from netlify.enums import ListSitesFilter
-from netlify.schemas import GenericResponse, Site, SiteDeploy, SiteFile, User
+from netlify.exceptions import NetlifyError, NetlifyException
+from netlify.schemas import Site, SiteDeploy, SiteFile, User
 
 
 class NetlifyClient:
@@ -44,26 +45,11 @@ class NetlifyClient:
         )
         return Site.from_dict(response)
 
-    def create_site_in_team(
-        self, account_slug: str, site: Site, configure_dns: bool | None
-    ) -> Site:
-        """
-        POST /{account_slug}/sites
-        """
-        response = self._send(
-            "POST",
-            f"/{account_slug}/sites",
-            params={"configure_dns": configure_dns},
-            json=dataclasses.asdict(site),
-        )
-        return Site.from_dict(response)
-
-    def delete_site(self, site_id: str) -> GenericResponse:
+    def delete_site(self, site_id: str) -> None:
         """
         DELETE /sites/{site_id}
         """
-        response = self._send("DELETE", f"/sites/{site_id}")
-        return GenericResponse.from_dict(response)
+        self._send("DELETE", f"/sites/{site_id}")
 
     def get_site(self, site_id: str) -> Site:
         """
@@ -84,23 +70,6 @@ class NetlifyClient:
             "GET",
             "/sites",
             params={"filter": filter, "page": page, "per_page": per_page},
-        )
-        return [Site.from_dict(site) for site in response]
-
-    def list_sites_for_account(
-        self,
-        account_slug: str,
-        name: str | None = None,
-        page: int | None = None,
-        per_page: int | None = None,
-    ) -> list[Site]:
-        """
-        GET /{account_slug}/sites
-        """
-        response = self._send(
-            "GET",
-            f"/{account_slug}/sites",
-            params={"name": name, "page": page, "per_page": per_page},
         )
         return [Site.from_dict(site) for site in response]
 
@@ -129,7 +98,7 @@ class NetlifyClient:
 
     def create_site_deploy(
         self, site_id: str, zip_file_path: str, title: str | None = None
-    ) -> Any:
+    ) -> SiteDeploy:
         """
         POST /sites/{site_id}/deploys
         """
@@ -143,6 +112,13 @@ class NetlifyClient:
             params={"title": title},
             content=file_bytes,
         )
+        return SiteDeploy.from_dict(response)
+
+    def get_site_deploy(self, site_id: str, deploy_id: str) -> SiteDeploy:
+        """
+        GET /sites/{site_id}/deploys/{deploy_id}
+        """
+        response = self._send("GET", f"/sites/{site_id}/deploys/{deploy_id}")
         return SiteDeploy.from_dict(response)
 
     def _send(
@@ -172,25 +148,32 @@ class NetlifyClient:
             headers=prepared_headers,
             timeout=timeout or self.timeout,
         ) as client:
-            response = client.request(
-                method,
-                path,
-                content=content,
-                data=data,
-                files=files,
-                json=json,
-                auth=BearerAuth(self.access_token),
-                params=params,
-                cookies=None,
-                headers=None,
-                follow_redirects=False,
-                timeout=None,
-                extensions=None,
-                **kwargs,
-            )
-            response.raise_for_status()
+            try:
+                response = client.request(
+                    method,
+                    path,
+                    content=content,
+                    data=data,
+                    files=files,
+                    json=json,
+                    auth=BearerAuth(self.access_token),
+                    params=params,
+                    cookies=None,
+                    headers=None,
+                    follow_redirects=False,
+                    timeout=None,
+                    extensions=None,
+                    **kwargs,
+                )
+                response.raise_for_status()
 
-            return response.json()  # probably needs to be smarter
+                return response.json()
+            except httpx.HTTPStatusError as http_err:
+                if "application/json" in response.headers["content-type"]:
+                    error = NetlifyError.from_dict(response.json())
+                    raise NetlifyException(method, path, error) from http_err
+
+                raise http_err
 
     def _default_headers(self) -> dict[str, str]:
         return {"User-Agent": self.user_agent}
