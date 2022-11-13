@@ -9,7 +9,11 @@ This is a work in progress package designed to wrap the [Netlify APIs](https://d
 
 Note that this library is in pre-release and the APIs may be changed in later versions.
 
-## Installation
+## User Guide
+
+This section is intended for developers who want to use the library to make requests to Netlify.
+
+### Installation
 
 ⚠ `netlify-python` currently supports python 3.10+.
 
@@ -19,7 +23,7 @@ Recommended installation through [PIP](https://pypi.org/project/netlify-python/)
 $ pip install netlify-python
 ```
 
-## Usage
+### Usage
 
 This client currently only supports [Personal Access Tokens](https://app.netlify.com/user/applications#personal-access-tokens).  Navigate to User Settings > Applications > Personal Access Tokens and create a new access token.  This is the token you'll use in your initialization of the client.
 
@@ -34,16 +38,9 @@ client.get_current_user() # Get current user information
 client.create_site_deploy('site-id', 'path/to/zip/file.zip')
 ```
 
-## API
+### API
 
 ⚠ This client is currently expanding its API support, more documentation coming soon here.
-
-## Roadmap
-
-Things that this library is planning to support:
-* Migration to context managers for the API client
-* asyncio support
-* More APIs in netlify
 
 ## For Developers
 
