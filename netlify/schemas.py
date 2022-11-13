@@ -27,6 +27,8 @@ class SiteFile(EDC):
     sha: str
     mime_type: str
     size: int
+    site_id: str | None
+    deploy_id: str | None
 
 
 @dataclass
@@ -143,7 +145,7 @@ class Site(EDC):
     ssl_url: str
     admin_url: str
     screenshot_url: str | None
-    created_at: str
+    created_at: datetime.datetime
     updated_at: datetime.datetime
     user_id: str
     session_id: str | None

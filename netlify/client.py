@@ -33,18 +33,6 @@ class NetlifyClient:
         """
         return User.from_dict(self._send("GET", "/user"))
 
-    def create_site(self, site: Site, configure_dns: bool | None) -> Site:
-        """
-        POST /sites
-        """
-        response = self._send(
-            "POST",
-            "/sites",
-            params={"configure_dns": configure_dns},
-            json=dataclasses.asdict(site),
-        )
-        return Site.from_dict(response)
-
     def delete_site(self, site_id: str) -> None:
         """
         DELETE /sites/{site_id}
@@ -72,15 +60,6 @@ class NetlifyClient:
             params={"filter": filter, "page": page, "per_page": per_page},
         )
         return [Site.from_dict(site) for site in response]
-
-    def update_site(self, site_id: str, site: Site) -> Site:
-        """
-        PATCH /sites/{site_id}
-        """
-        response = self._send(
-            "PATCH", f"/sites/{site_id}", json=dataclasses.asdict(site)
-        )
-        return Site.from_dict(response)
 
     def get_site_file_by_path_name(self, site_id: str, file_path: str) -> SiteFile:
         """
@@ -167,9 +146,12 @@ class NetlifyClient:
                 )
                 response.raise_for_status()
 
+                if response.status_code == httpx.codes.NO_CONTENT:
+                    return None
+
                 return response.json()
             except httpx.HTTPStatusError as http_err:
-                if "application/json" in response.headers["content-type"]:
+                if "application/json" in response.headers.get("content-type", ""):
                     error = NetlifyError.from_dict(response.json())
                     raise NetlifyException(method, path, error) from http_err
 
