@@ -27,7 +27,7 @@ jobs:
       - name: pylint
         run: python -m pylint netlify tests --rcfile=.pylintrc
       - name: mypy
-        run: python -m mypy .
+        run: python -m mypy netlify tests
       - name: pytest
         run: python -m pytest --cov=netlify --cov-report=term-missing tests/
           
