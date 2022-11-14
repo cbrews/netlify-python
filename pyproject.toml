@@ -48,6 +48,9 @@ requires = ['setuptools', 'wheel']
 [tool.setuptools.package-data]
 netlify = ["py.typed"]
 
+[tool.setuptools.dynamic]
+version = { attr = "netlify.__version__" }
+
 [tool.isort]
 profile = "black"
 
