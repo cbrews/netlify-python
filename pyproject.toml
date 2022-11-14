@@ -43,23 +43,13 @@ build = [
 ]
 
 [build-system]
-requires = ['hatchling']
-build-backend = 'hatchling.build'
+requires = ['setuptools', 'wheel']
 
-
-[tool.hatch.version]
-path = "netlify/__init__.py"
-
-[tool.hatch.build.targets.sdist]
-include = [
-    '/README.md',
-    '/LICENSE',
-    '/netlify',
-]
+[tool.setuptools.package-data]
+netlify = ["py.typed"]
 
 [tool.isort]
 profile = "black"
-
 
 [tool.mypy]
 python_version = "3.10"
