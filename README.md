@@ -76,6 +76,11 @@ Install your dependencies:
 $ pip install .[dev]
 ```
 
+Setup pre-commits:
+```bash
+$ pre-commit install
+```
+
 You should be good to go now.
 
 ### Building the package
