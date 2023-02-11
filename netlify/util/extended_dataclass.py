@@ -56,7 +56,7 @@ class ExtendedDataclass:
         # Even if we populate non-nullable fields this will get rejected later
         mapped_dict = {field.name: None for field in dataclasses.fields(cls)}
 
-        for (key, value) in d.items():
+        for key, value in d.items():
             try:
                 field = cls.get_field(key)
                 if field is not None:
