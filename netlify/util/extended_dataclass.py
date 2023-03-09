@@ -42,6 +42,7 @@ class ValidationError(Exception):
 T = TypeVar("T", bound="ExtendedDataclass")
 
 
+@dataclasses.dataclass
 class ExtendedDataclass:
     """
     Extended dataclass is a smart container wrapper allowing you
