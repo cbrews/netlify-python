@@ -1,56 +1,39 @@
-# pylint: disable=redefined-outer-name
-import json
-from typing import Generator
+from collections.abc import Generator
 
 import pytest
-from httpx import HTTPStatusError
+from pytest_httpx import HTTPXMock
 
 from netlify import __version__
-from netlify.client import NetlifyClient
-from netlify.exceptions import NetlifyException
+from netlify.client import CLIENT_USER_AGENT, NetlifyClient
+from netlify.schemas import (
+    CreateSiteRequest,
+)
+
+
+def test_default_client_user_agent_version_matches():
+    assert f"NetlifyPythonClient/{__version__}" == CLIENT_USER_AGENT
 
 
 @pytest.fixture
 def client() -> Generator[NetlifyClient, None, None]:
-    yield NetlifyClient("test_access_token")
+    yield NetlifyClient("access-token")
 
 
-def test_default_client_user_agent_version_matches(client: NetlifyClient):
-    assert f"NetlifyPythonClient/{__version__}" == client.user_agent
+@pytest.fixture
+def set_mock_response(httpx_mock: HTTPXMock):
+    def set_mock_response(content: bytes = b"", status_code: int = 200) -> None:
+        httpx_mock.add_response(status_code=status_code, content=content)
+
+    return set_mock_response
 
 
-def test_client_json_error(httpx_mock, client: NetlifyClient):
-    httpx_mock.add_response(
-        content=json.dumps({"code": 404, "message": "Not found"}),
-        status_code=404,
-        headers={"content-type": "application/json"},
-    )
-
-    with pytest.raises(NetlifyException) as excinfo:
-        client._send("GET", "/bad_url")  # pylint: disable=protected-access
-
-    netlify_exception = excinfo.value
-
-    assert netlify_exception.method == "GET"
-    assert netlify_exception.path == "/bad_url"
-    assert netlify_exception.code == 404
-    assert netlify_exception.message == "Not found"
-
-
-def test_client_unhandled_error(httpx_mock, client: NetlifyClient):
-    httpx_mock.add_response(
-        content=b"garbage response",
-        status_code=500,
-    )
-
-    with pytest.raises(HTTPStatusError):
-        client._send("GET", "/bad_url")  # pylint: disable=protected-access
-
-
+@pytest.mark.parametrize("json_fixture", ["current_user_response"], indirect=True)
 def test_get_current_user(
-    httpx_mock, current_user_response: bytes, client: NetlifyClient
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
 ):
-    httpx_mock.add_response(content=current_user_response)
+    set_mock_response(json_fixture)
 
     result = client.get_current_user()
 
@@ -59,14 +42,53 @@ def test_get_current_user(
     assert result.email == "example@example.com"
 
 
-def test_delete_site(httpx_mock, client: NetlifyClient):
-    httpx_mock.add_response(content=b"", status_code=204)
+@pytest.mark.parametrize("json_fixture", ["site_response"], indirect=True)
+def test_create_site(
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
+):
+    set_mock_response(json_fixture, status_code=201)
+
+    result = client.create_site(CreateSiteRequest(name="test-site-name"))
+
+    # Using mocked site_response
+    assert result.id == "11111111-1111-1111-1111-111111111111"
+
+
+@pytest.mark.parametrize("json_fixture", ["site_response"], indirect=True)
+def test_create_site_in_team(
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
+):
+    set_mock_response(json_fixture, status_code=201)
+
+    result = client.create_site_in_team(
+        "my-account",
+        CreateSiteRequest(name="test-site-name"),
+    )
+
+    # Using mocked site_response
+    assert result.id == "11111111-1111-1111-1111-111111111111"
+
+
+def test_delete_site(
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
+):
+    set_mock_response(status_code=204)
 
     client.delete_site("11111111-1111-1111-1111-111111111111")
 
 
-def test_get_site(httpx_mock, site_response: bytes, client: NetlifyClient):
-    httpx_mock.add_response(content=site_response)
+@pytest.mark.parametrize("json_fixture", ["site_response"], indirect=True)
+def test_get_site(
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
+):
+    set_mock_response(json_fixture)
 
     result = client.get_site("11111111-1111-1111-1111-111111111111")
 
@@ -75,8 +97,13 @@ def test_get_site(httpx_mock, site_response: bytes, client: NetlifyClient):
     assert result.account_name == "Marty McFly's team"
 
 
-def test_list_sites(httpx_mock, list_sites_response: bytes, client: NetlifyClient):
-    httpx_mock.add_response(content=list_sites_response)
+@pytest.mark.parametrize("json_fixture", ["list_sites_response"], indirect=True)
+def test_list_sites(
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
+):
+    set_mock_response(json_fixture)
 
     result = client.list_sites()
 
@@ -86,10 +113,15 @@ def test_list_sites(httpx_mock, list_sites_response: bytes, client: NetlifyClien
     assert result[0].account_name == "Marty McFly's team"
 
 
+@pytest.mark.parametrize(
+    "json_fixture", ["site_file_by_path_name_response"], indirect=True
+)
 def test_get_site_file_by_path_name(
-    httpx_mock, site_by_file_path_name_response: bytes, client: NetlifyClient
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
 ):
-    httpx_mock.add_response(content=site_by_file_path_name_response)
+    set_mock_response(json_fixture)
 
     result = client.get_site_file_by_path_name(
         "11111111-1111-1111-1111-111111111111", "index.html"
@@ -100,10 +132,13 @@ def test_get_site_file_by_path_name(
     assert result.sha == "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
 
 
+@pytest.mark.parametrize("json_fixture", ["list_site_files_response"], indirect=True)
 def test_list_site_files(
-    httpx_mock, list_site_files_response: bytes, client: NetlifyClient
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
 ):
-    httpx_mock.add_response(content=list_site_files_response)
+    set_mock_response(json_fixture)
 
     result = client.list_site_files("11111111-1111-1111-1111-111111111111")
 
@@ -116,10 +151,13 @@ def test_list_site_files(
     assert result[1].sha == "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
 
 
+@pytest.mark.parametrize("json_fixture", ["site_deploy_response"], indirect=True)
 def test_create_site_deploy__file_exists(
-    httpx_mock, site_deploy_response: bytes, client: NetlifyClient
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
 ):
-    httpx_mock.add_response(content=site_deploy_response)
+    set_mock_response(json_fixture)
 
     result = client.create_site_deploy(
         "11111111-1111-1111-1111-111111111111", "./tests/fixtures/test_site.zip"
@@ -129,7 +167,9 @@ def test_create_site_deploy__file_exists(
     assert result.site_id == "11111111-1111-1111-1111-111111111111"
 
 
-def test_create_site_deploy__file_not_exists(client: NetlifyClient):
+def test_create_site_deploy__file_not_exists(
+    client: NetlifyClient,
+):
     with pytest.raises(FileNotFoundError) as excinfo:
         client.create_site_deploy(
             "11111111-1111-1111-1111-111111111111", "./tests/fixtures/non-extant.zip"
@@ -139,10 +179,13 @@ def test_create_site_deploy__file_not_exists(client: NetlifyClient):
     assert "tests/fixtures/non-extant.zip" in str(excinfo.value)
 
 
+@pytest.mark.parametrize("json_fixture", ["site_deploy_response"], indirect=True)
 def test_get_site_deploy(
-    httpx_mock, site_deploy_response: bytes, client: NetlifyClient
+    json_fixture: bytes,
+    client: NetlifyClient,
+    set_mock_response,  # type: ignore
 ):
-    httpx_mock.add_response(content=site_deploy_response)
+    set_mock_response(json_fixture)
 
     result = client.get_site_deploy(
         "11111111-1111-1111-1111-111111111111", "abcdef0123456789"

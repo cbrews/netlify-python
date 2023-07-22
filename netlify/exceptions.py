@@ -1,21 +1,18 @@
-from dataclasses import dataclass
-
-from netlify.util.extended_dataclass import ExtendedDataclass as EDC
+from pydantic import BaseModel
 
 
-@dataclass
-class NetlifyError(EDC):
+class NetlifyErrorSchema(BaseModel):
     code: int
     message: str
 
 
-class NetlifyException(Exception):
+class NetlifyError(Exception):
     method: str
     path: str
     code: int
     message: str
 
-    def __init__(self, method: str, path: str, error: NetlifyError):
+    def __init__(self, method: str, path: str, error: NetlifyErrorSchema):
         self.method = method
         self.path = path
         self.code = error.code
@@ -25,3 +22,7 @@ class NetlifyException(Exception):
             f"Netlify request to {self.method} {self.path} did not succeed. "
             f"code: {self.code}, message: '{self.message}'"
         )
+
+
+# Backwards compatibility
+NetlifyException = NetlifyError
