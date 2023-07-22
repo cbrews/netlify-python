@@ -139,7 +139,7 @@ class Site(BaseModel):
     force_ssl: bool | None = None
     managed_dns: bool
     deploy_url: str
-    published_deploy: SiteDeploy
+    published_deploy: SiteDeploy | None
     account_name: str
     account_slug: str
     git_provider: str | None = None
