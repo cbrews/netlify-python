@@ -4,9 +4,9 @@ from pydantic import BaseModel
 
 
 class NetlifyErrorSchema(BaseModel):
-    code: int | None
-    message: str | None
-    errors: dict[str, Any] | None
+    code: int | None = None
+    message: str | None = None
+    errors: dict[str, Any] | None = None
 
 
 class NetlifyError(Exception):
