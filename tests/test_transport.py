@@ -45,6 +45,14 @@ def test_transport_build_base_url(transport: NetlifyTransport):
     assert transport._build_base_url("") == ""
 
 
+@pytest.mark.parametrize(
+    "error_response",
+    [
+        {"code": 404, "message": "Not found"},
+        {"code": 500, "errors": {"bad_response": "something"}},
+        {"errors": "fatal"},
+    ],
+)
 def test_transport_json_error(httpx_mock: HTTPXMock, transport: NetlifyTransport):
     httpx_mock.add_response(
         content=json.dumps({"code": 404, "message": "Not found"}).encode("utf-8"),
