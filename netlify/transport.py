@@ -1,3 +1,4 @@
+import logging
 from collections.abc import Iterable, Mapping, Sequence
 from typing import Any
 
@@ -5,6 +6,8 @@ import httpx
 
 from netlify.auth.bearer import BearerAuth
 from netlify.exceptions import NetlifyError, NetlifyErrorSchema
+
+logger = logging.getLogger(__name__)
 
 
 class NetlifyTransport:
@@ -69,6 +72,8 @@ class NetlifyTransport:
                     extensions=None,
                     **kwargs,
                 )
+
+                logger.debug(f"Response from netlify: {response}")
                 response.raise_for_status()
 
                 if response.status_code == httpx.codes.NO_CONTENT:
