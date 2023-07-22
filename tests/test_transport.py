@@ -1,5 +1,6 @@
 import json
 from collections.abc import Generator
+from typing import Any
 
 import pytest
 from httpx import HTTPStatusError
@@ -53,9 +54,11 @@ def test_transport_build_base_url(transport: NetlifyTransport):
         {"errors": "fatal"},
     ],
 )
-def test_transport_json_error(httpx_mock: HTTPXMock, transport: NetlifyTransport):
+def test_transport_json_error(
+    httpx_mock: HTTPXMock, error_response: dict[str, Any], transport: NetlifyTransport
+):
     httpx_mock.add_response(
-        content=json.dumps({"code": 404, "message": "Not found"}).encode("utf-8"),
+        content=json.dumps(error_response).encode("utf-8"),
         status_code=404,
         headers={"content-type": "application/json"},
     )
