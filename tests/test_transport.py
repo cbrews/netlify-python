@@ -51,7 +51,7 @@ def test_transport_build_base_url(transport: NetlifyTransport):
     [
         {"code": 404, "message": "Not found"},
         {"code": 500, "errors": {"bad_response": "something"}},
-        {"errors": "fatal"},
+        {"errors": {"fatal": True}},
     ],
 )
 def test_transport_json_error(
@@ -70,8 +70,9 @@ def test_transport_json_error(
 
     assert netlify_exception.method == "GET"
     assert netlify_exception.path == "/bad_url"
-    assert netlify_exception.code == 404
-    assert netlify_exception.message == "Not found"
+    assert netlify_exception.code == error_response.get("code")
+    assert netlify_exception.message == error_response.get("message")
+    assert netlify_exception.errors == error_response.get("errors")
 
 
 def test_transport_unhandled_error(httpx_mock: HTTPXMock, transport: NetlifyTransport):
