@@ -2,7 +2,7 @@ from netlify.enums import ListSitesFilter
 from netlify.schemas import CreateSiteRequest, Site, SiteDeploy, SiteFile, User
 from netlify.transport import NetlifyTransport
 
-CLIENT_USER_AGENT = "NetlifyPythonClient/0.1.1"
+CLIENT_USER_AGENT = "NetlifyPythonClient/0.2.0"
 
 
 class NetlifyClient:
