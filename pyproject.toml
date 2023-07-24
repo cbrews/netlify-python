@@ -37,7 +37,7 @@ dev = [
   "pytest-cov==4.1.0",
   "pytest-httpx==0.22.0",
   "pre-commit==3.3.3",
-  "pytest-mock==3.0.0",
+  "pytest-mock==3.11.1",
 ]
 build = [
   "build",
