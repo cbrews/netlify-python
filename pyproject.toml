@@ -11,7 +11,7 @@ dynamic = ["version"]
 dependencies = [
   "httpx>=0.23.0",
   "python-dateutil>=2.8.2",
-  "pydantic>1",
+  "pydantic>=1",
 ]
 classifiers = [
   "Development Status :: 1 - Planning",
@@ -19,6 +19,7 @@ classifiers = [
   "Topic :: Software Development :: Libraries",
   "Programming Language :: Python :: 3.10",
   "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
   "License :: OSI Approved :: MIT License",
 ]
 keywords = [
