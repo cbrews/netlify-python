@@ -111,7 +111,7 @@ class SiteProcessingSettingsHtml(BaseModel):
 
 
 class SiteProcessingSettings(BaseModel):
-    skip: bool
+    skip: bool | None = None
     css: MinifyOptions | None = None
     js: MinifyOptions | None = None
     images: SiteProcessingSettingsImages | None = None

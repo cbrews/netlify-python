@@ -1,4 +1,5 @@
 from netlify.enums import ListSitesFilter
+from netlify.pydantic_polyfill import PydanticPolyfill
 from netlify.schemas import CreateSiteRequest, Site, SiteDeploy, SiteFile, User
 from netlify.transport import NetlifyTransport
 
@@ -22,7 +23,8 @@ class NetlifyClient:
         GET /user
         """
         response = self._transport.send("GET", "/user")
-        return User.parse_obj(response)
+        polyfill = PydanticPolyfill[User](User)
+        return polyfill.to_pydantic_object(response)
 
     def create_site(
         self,
@@ -38,7 +40,8 @@ class NetlifyClient:
             params={"configure_dns": configure_dns},
             payload=create_site_request.dict(),
         )
-        return Site.parse_obj(response)
+        polyfill = PydanticPolyfill[Site](Site)
+        return polyfill.to_pydantic_object(response)
 
     def create_site_in_team(
         self,
@@ -55,7 +58,8 @@ class NetlifyClient:
             params={"configure_dns": configure_dns},
             payload=create_site_request.dict(),
         )
-        return Site.parse_obj(response)
+        polyfill = PydanticPolyfill[Site](Site)
+        return polyfill.to_pydantic_object(response)
 
     def delete_site(self, site_id: str) -> None:
         """
@@ -67,7 +71,9 @@ class NetlifyClient:
         """
         GET /sites/{site_id}
         """
-        return Site.parse_obj(self._transport.send("GET", f"/sites/{site_id}"))
+        response = self._transport.send("GET", f"/sites/{site_id}")
+        polyfill = PydanticPolyfill[Site](Site)
+        return polyfill.to_pydantic_object(response)
 
     def list_sites(
         self,
@@ -83,21 +89,24 @@ class NetlifyClient:
             "/sites",
             params={"filter": filter, "page": page, "per_page": per_page},
         )
-        return [Site.parse_obj(site) for site in response]
+        polyfill = PydanticPolyfill[Site](Site)
+        return [polyfill.to_pydantic_object(site) for site in response]
 
     def get_site_file_by_path_name(self, site_id: str, file_path: str) -> SiteFile:
         """
         GET /sites/{site_id}/files/{file_path}
         """
         response = self._transport.send("GET", f"/sites/{site_id}/files/{file_path}")
-        return SiteFile.parse_obj(response)
+        polyfill = PydanticPolyfill[SiteFile](SiteFile)
+        return polyfill.to_pydantic_object(response)
 
     def list_site_files(self, site_id: str) -> list[SiteFile]:
         """
         GET /sites/{site_id}/files
         """
         response = self._transport.send("GET", f"/sites/{site_id}/files")
-        return [SiteFile.parse_obj(site_file) for site_file in response]
+        polyfill = PydanticPolyfill[SiteFile](SiteFile)
+        return [polyfill.to_pydantic_object(site_file) for site_file in response]
 
     def create_site_deploy(
         self, site_id: str, zip_file_path: str, title: str | None = None
@@ -115,11 +124,13 @@ class NetlifyClient:
             params={"title": title},
             content=file_bytes,
         )
-        return SiteDeploy.parse_obj(response)
+        polyfill = PydanticPolyfill[SiteDeploy](SiteDeploy)
+        return polyfill.to_pydantic_object(response)
 
     def get_site_deploy(self, site_id: str, deploy_id: str) -> SiteDeploy:
         """
         GET /sites/{site_id}/deploys/{deploy_id}
         """
         response = self._transport.send("GET", f"/sites/{site_id}/deploys/{deploy_id}")
-        return SiteDeploy.parse_obj(response)
+        polyfill = PydanticPolyfill[SiteDeploy](SiteDeploy)
+        return polyfill.to_pydantic_object(response)
