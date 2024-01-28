@@ -28,10 +28,6 @@ class SiteFile(BaseModel):
     deploy_id: str | None = None
 
 
-class SiteCapabilities(BaseModel):
-    large_media_enabled: bool | None = None
-
-
 class FunctionSchedules(BaseModel):
     name: str
     cron: str
@@ -66,7 +62,6 @@ class SiteDeploy(BaseModel):
     context: str
     locked: bool | None = None
     review_url: str | None = None
-    site_capabilities: SiteCapabilities
     framework: str | None = None
     function_schedules: list[FunctionSchedules]
 
