@@ -32,11 +32,18 @@ class NetlifyTransport:
         content: str | bytes | Iterable[bytes] | None = None,
         files: httpx._types.RequestFiles | None = None,
         payload: Any | None = None,
-        params: Mapping[
-            str,
-            str | int | float | bool | Sequence[str | int | float | bool | None] | None,
-        ]
-        | None = None,
+        params: (
+            Mapping[
+                str,
+                str
+                | int
+                | float
+                | bool
+                | Sequence[str | int | float | bool | None]
+                | None,
+            ]
+            | None
+        ) = None,
         headers: dict[str, str] | None = None,
         timeout: int | float | None = None,
         base_url: str | None = None,
