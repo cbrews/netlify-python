@@ -33,7 +33,7 @@ keywords = [
 [project.optional-dependencies]
 dev = [
   "black==24.10.0",
-  "mypy==1.12.1",
+  "mypy==1.13.0",
   "ruff==0.7.0",
   "pytest==8.3.3",
   "types-python-dateutil==2.9.0.20241003",
