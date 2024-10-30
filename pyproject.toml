@@ -37,7 +37,7 @@ dev = [
   "ruff==0.7.1",
   "pytest==8.3.3",
   "types-python-dateutil==2.9.0.20241003",
-  "pytest-cov==5.0.0",
+  "pytest-cov==6.0.0",
   "pytest-httpx==0.33.0",
   "pre-commit==4.0.1",
   "pytest-mock==3.14.0",
