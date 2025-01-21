@@ -39,7 +39,7 @@ dev = [
   "types-python-dateutil==2.9.0.20241206",
   "pytest-cov==6.0.0",
   "pytest-httpx==0.35.0",
-  "pre-commit==4.0.1",
+  "pre-commit==4.1.0",
   "pytest-mock==3.14.0",
 ]
 build = [
