@@ -34,7 +34,7 @@ keywords = [
 dev = [
   "black==25.1.0",
   "mypy==1.15.0",
-  "ruff==0.9.4",
+  "ruff==0.9.5",
   "pytest==8.3.4",
   "types-python-dateutil==2.9.0.20241206",
   "pytest-cov==6.0.0",
