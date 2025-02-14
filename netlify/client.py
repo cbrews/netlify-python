@@ -3,7 +3,7 @@ from netlify.pydantic_polyfill import PydanticPolyfill
 from netlify.schemas import CreateSiteRequest, Site, SiteDeploy, SiteFile, User
 from netlify.transport import NetlifyTransport
 
-CLIENT_USER_AGENT = "NetlifyPythonClient/0.3.1"
+CLIENT_USER_AGENT = "NetlifyPythonClient/0.3.2"
 
 
 class NetlifyClient:
