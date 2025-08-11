@@ -39,7 +39,7 @@ dev = [
   "ruff==0.12.8",
   "pytest==8.4.1",
   "python-dateutil==2.9.0.post0",
-  "types-python-dateutil==2.9.0.20250708",
+  "types-python-dateutil==2.9.0.20250809",
   "pytest-cov==6.2.1",
   "pytest-httpx==0.35.0",
   "pre-commit==4.2.0",
