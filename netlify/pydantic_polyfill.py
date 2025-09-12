@@ -14,7 +14,8 @@ class PydanticPolyfill(Generic[T]):
             return self.cls.parse_obj(data)  # type: ignore[attr-defined]
         return self.cls.model_validate(data)  # type: ignore[attr-defined]
 
-    def from_pydantic_object(self, obj: T) -> dict[str, Any]:
+    @staticmethod
+    def from_pydantic_object(obj: T) -> dict[str, Any]:
         if pydantic.__version__ < "2":
             return obj.dict()  # type: ignore[attr-defined]
         return obj.model_dump()  # type: ignore[attr-defined]
