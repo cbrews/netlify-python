@@ -37,7 +37,9 @@ class NetlifyClient:
             "POST",
             "/sites",
             params={"configure_dns": configure_dns},
-            payload=PydanticPolyfill[CreateSiteRequest].from_pydantic_object(create_site_request),
+            payload=PydanticPolyfill[CreateSiteRequest].from_pydantic_object(
+                create_site_request
+            ),
         )
         return PydanticPolyfill[Site](Site).to_pydantic_object(response)
 
@@ -49,12 +51,14 @@ class NetlifyClient:
     ) -> Site:
         """
         POST /{account_slug}/sites
-        """ 
+        """
         response = self._transport.send(
             "POST",
             f"/{account_slug}/sites",
             params={"configure_dns": configure_dns},
-            payload=PydanticPolyfill[CreateSiteRequest].from_pydantic_object(create_site_request),
+            payload=PydanticPolyfill[CreateSiteRequest].from_pydantic_object(
+                create_site_request
+            ),
         )
         return PydanticPolyfill[Site](Site).to_pydantic_object(response)
 
@@ -85,7 +89,9 @@ class NetlifyClient:
             "/sites",
             params={"filter": filter, "page": page, "per_page": per_page},
         )
-        return [PydanticPolyfill[Site](Site).to_pydantic_object(site) for site in response]
+        return [
+            PydanticPolyfill[Site](Site).to_pydantic_object(site) for site in response
+        ]
 
     def get_site_file_by_path_name(self, site_id: str, file_path: str) -> SiteFile:
         """
@@ -99,7 +105,10 @@ class NetlifyClient:
         GET /sites/{site_id}/files
         """
         response = self._transport.send("GET", f"/sites/{site_id}/files")
-        return [PydanticPolyfill[SiteFile](SiteFile).to_pydantic_object(site_file) for site_file in response]
+        return [
+            PydanticPolyfill[SiteFile](SiteFile).to_pydantic_object(site_file)
+            for site_file in response
+        ]
 
     def create_site_deploy(
         self, site_id: str, zip_file_path: str, title: str | None = None
@@ -116,7 +125,7 @@ class NetlifyClient:
             headers={"Content-Type": "application/zip"},
             params={"title": title},
             content=file_bytes,
-        ) 
+        )
         return PydanticPolyfill[SiteDeploy](SiteDeploy).to_pydantic_object(response)
 
     def get_site_deploy(self, site_id: str, deploy_id: str) -> SiteDeploy:
