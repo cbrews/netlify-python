@@ -8,6 +8,7 @@ class User(BaseModel):
     id: str
     uid: str | None = None
     full_name: str | None = None
+    avatar: str | None = None
     avatar_url: str | None = None
     email: str
     affiliate_id: str | None = None

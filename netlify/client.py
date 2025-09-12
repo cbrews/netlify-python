@@ -2,7 +2,7 @@ from netlify.enums import ListSitesFilter
 from netlify.pydantic_polyfill import PydanticPolyfill
 from netlify.schemas import CreateSiteRequest, Site, SiteDeploy, SiteFile, User
 from netlify.transport import NetlifyTransport
-
+import json
 CLIENT_USER_AGENT = "NetlifyPythonClient/0.3.2"
 
 
@@ -34,13 +34,13 @@ class NetlifyClient:
         """
         POST /sites
         """
+        polyfill = PydanticPolyfill[Site](Site)
         response = self._transport.send(
             "POST",
             "/sites",
             params={"configure_dns": configure_dns},
-            payload=create_site_request.dict(),
+            payload=polyfill.from_pydantic_object(create_site_request),
         )
-        polyfill = PydanticPolyfill[Site](Site)
         return polyfill.to_pydantic_object(response)
 
     def create_site_in_team(
@@ -52,13 +52,13 @@ class NetlifyClient:
         """
         POST /{account_slug}/sites
         """
+        polyfill = PydanticPolyfill[Site](Site)
         response = self._transport.send(
             "POST",
             f"/{account_slug}/sites",
             params={"configure_dns": configure_dns},
-            payload=create_site_request.dict(),
+            payload=polyfill.from_pydantic_object(create_site_request),
         )
-        polyfill = PydanticPolyfill[Site](Site)
         return polyfill.to_pydantic_object(response)
 
     def delete_site(self, site_id: str) -> None:

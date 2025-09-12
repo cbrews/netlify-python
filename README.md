@@ -7,7 +7,9 @@
 
 This is a work in progress package designed to wrap the [Netlify APIs](https://docs.netlify.com/api/get-started/) for python client users.
 
-Note that this library is in pre-release and the APIs may be changed in later versions.
+Full openapi docs: https://open-api.netlify.com/
+
+Note that this library is in pre-release and its APIs may be changed in later versions.
 
 ## User Guide
 
