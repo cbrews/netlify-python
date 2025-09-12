@@ -6,6 +6,7 @@ import httpx
 
 from netlify.auth.bearer import BearerAuth
 from netlify.exceptions import NetlifyError, NetlifyErrorSchema
+from netlify.pydantic_polyfill import PydanticPolyfill
 
 logger = logging.getLogger(__name__)
 
@@ -89,7 +90,9 @@ class NetlifyTransport:
                 return response.json()
             except httpx.HTTPStatusError as http_err:
                 if "application/json" in response.headers.get("content-type", ""):
-                    error = NetlifyErrorSchema.parse_obj(response.json())
+                    error = PydanticPolyfill[NetlifyErrorSchema](
+                        NetlifyErrorSchema
+                    ).to_pydantic_object(response.json())
                     raise NetlifyError(method, path, error) from http_err
 
                 raise http_err
