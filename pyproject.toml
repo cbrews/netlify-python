@@ -78,6 +78,11 @@ module = "tests.*"
 disallow_untyped_defs = false
 
 
+[tool.pytest.ini_options]
+filterwarnings = [
+  "error::DeprecationWarning"
+]
+
 [tool.coverage.run]
 omit = [
   "*/__main__.py"
