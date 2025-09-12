@@ -10,10 +10,14 @@ import os
 from pprint import pprint
 
 from netlify import NetlifyClient
+from netlify.exceptions import NetlifyError
 
 access_token = os.getenv("NETLIFY_ACCESS_TOKEN", "")
 
 client = NetlifyClient(access_token=access_token)
 
-pprint(client.get_current_user())
-pprint(client.list_sites())
+try:
+    pprint(client.get_current_user())
+    pprint(client.list_sites())
+except NetlifyError as e:
+    pprint(e)
