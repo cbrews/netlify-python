@@ -2,6 +2,7 @@ import os
 from collections.abc import Generator
 
 import pytest
+from _pytest.fixtures import SubRequest
 
 
 def fixture_from_file(fixture_path: str) -> bytes:
@@ -11,5 +12,5 @@ def fixture_from_file(fixture_path: str) -> bytes:
 
 
 @pytest.fixture
-def json_fixture(request) -> Generator[bytes, None, None]:
+def json_fixture(request: SubRequest) -> Generator[bytes, None, None]:
     yield fixture_from_file(f"{request.param}.json")

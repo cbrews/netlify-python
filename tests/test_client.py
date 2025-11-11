@@ -1,4 +1,4 @@
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 
 import pytest
 from pytest_httpx import HTTPXMock
@@ -10,7 +10,7 @@ from netlify.schemas import (
 )
 
 
-def test_default_client_user_agent_version_matches():
+def test_default_client_user_agent_version_matches() -> None:
     assert f"NetlifyPythonClient/{__version__}" == CLIENT_USER_AGENT
 
 
@@ -20,7 +20,7 @@ def client() -> Generator[NetlifyClient, None, None]:
 
 
 @pytest.fixture
-def set_mock_response(httpx_mock: HTTPXMock):
+def set_mock_response(httpx_mock: HTTPXMock) -> Callable[..., None]:
     def set_mock_response(content: bytes = b"", status_code: int = 200) -> None:
         httpx_mock.add_response(status_code=status_code, content=content)
 
@@ -31,8 +31,8 @@ def set_mock_response(httpx_mock: HTTPXMock):
 def test_get_current_user(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.get_current_user()
@@ -46,8 +46,8 @@ def test_get_current_user(
 def test_create_site(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture, status_code=201)
 
     result = client.create_site(CreateSiteRequest(name="test-site-name"))
@@ -60,8 +60,8 @@ def test_create_site(
 def test_create_site_in_team(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture, status_code=201)
 
     result = client.create_site_in_team(
@@ -75,8 +75,8 @@ def test_create_site_in_team(
 
 def test_delete_site(
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(status_code=204)
 
     client.delete_site("11111111-1111-1111-1111-111111111111")
@@ -86,8 +86,8 @@ def test_delete_site(
 def test_get_site(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.get_site("11111111-1111-1111-1111-111111111111")
@@ -101,8 +101,8 @@ def test_get_site(
 def test_list_sites(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.list_sites()
@@ -119,8 +119,8 @@ def test_list_sites(
 def test_get_site_file_by_path_name(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.get_site_file_by_path_name(
@@ -136,8 +136,8 @@ def test_get_site_file_by_path_name(
 def test_list_site_files(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.list_site_files("11111111-1111-1111-1111-111111111111")
@@ -155,8 +155,8 @@ def test_list_site_files(
 def test_create_site_deploy__file_exists(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.create_site_deploy(
@@ -169,7 +169,7 @@ def test_create_site_deploy__file_exists(
 
 def test_create_site_deploy__file_not_exists(
     client: NetlifyClient,
-):
+) -> None:
     with pytest.raises(FileNotFoundError) as excinfo:
         client.create_site_deploy(
             "11111111-1111-1111-1111-111111111111", "./tests/fixtures/non-extant.zip"
@@ -183,8 +183,8 @@ def test_create_site_deploy__file_not_exists(
 def test_get_site_deploy(
     json_fixture: bytes,
     client: NetlifyClient,
-    set_mock_response,  # type: ignore
-):
+    set_mock_response: Callable[..., None],
+) -> None:
     set_mock_response(json_fixture)
 
     result = client.get_site_deploy(
