@@ -28,9 +28,11 @@ class NetlifyError(Exception):
             f"code: {self.code}"
             if self.code is not None
             else (
-                "" f"message: {self.message}"
+                f"message: {self.message}"
                 if self.message is not None
-                else "" f"errors: {self.errors}" if self.errors is not None else ""
+                else f"errors: {self.errors}"
+                if self.errors is not None
+                else ""
             )
         )
 

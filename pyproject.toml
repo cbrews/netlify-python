@@ -34,7 +34,6 @@ keywords = [
 [project.optional-dependencies]
 dev = [
   "httpx==0.28.1",
-  "black==25.9.0",
   "mypy==1.18.2",
   "ruff==0.14.4",
   "pytest==8.4.2",
@@ -68,15 +67,12 @@ python_version = "3.10"
 explicit_package_bases = true
 warn_unused_configs = true
 warn_redundant_casts = true
+show_error_codes = true
 
 strict_optional = true
+no_implicit_optional = true
 check_untyped_defs = true
 disallow_untyped_defs = true
-
-[[tool.mypy.overrides]]
-module = "tests.*"
-disallow_untyped_defs = false
-
 
 [tool.pytest.ini_options]
 filterwarnings = [

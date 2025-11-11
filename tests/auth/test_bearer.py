@@ -1,16 +1,12 @@
-from pydantic import BaseModel
+import httpx
 
 from netlify.auth.bearer import BearerAuth
 
 
-class MockRequest(BaseModel):
-    headers: dict
-
-
-def test_bearer_auth():
+def test_bearer_auth() -> None:
     bearer_auth = BearerAuth("test-token")
-    # Run auth generator
-    generator = bearer_auth.auth_flow(MockRequest(headers={}))  # type: ignore[arg-type]
-    result = generator.__next__()
 
+    request = httpx.Request("GET", "https://example.com")
+    # Run auth generator
+    result = next(bearer_auth.auth_flow(request))
     assert result.headers["Authorization"] == "Bearer test-token"
