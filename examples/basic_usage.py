@@ -12,7 +12,7 @@ from pprint import pprint
 from netlify import NetlifyClient
 from netlify.exceptions import NetlifyError
 
-access_token = os.getenv("NETLIFY_ACCESS_TOKEN", "")
+access_token = os.getenv("NETLIFY_ACCESS_TOKEN", "dummy_access_token")
 
 client = NetlifyClient(access_token=access_token)
 

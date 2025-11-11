@@ -11,7 +11,8 @@ dynamic = ["version"]
 dependencies = [
   "httpx>=0.23.0",
   "python-dateutil>=2.8.2",
-  "pydantic>=1",
+  'pydantic>=1;python_version < "3.14"',
+  'pydantic>=2;python_version >= "3.14"',
 ]
 classifiers = [
   "Development Status :: 3 - Alpha",
@@ -21,6 +22,7 @@ classifiers = [
   "Programming Language :: Python :: 3.11",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
   "License :: OSI Approved :: MIT License",
   "Framework :: Pydantic :: 1",
   "Framework :: Pydantic :: 2",
