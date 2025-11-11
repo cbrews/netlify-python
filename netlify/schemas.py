@@ -80,6 +80,7 @@ class SiteRepoInfo(BaseModel):
     provider: str | None = None
     deploy_key_id: str | None = None
     repo_path: str | None = None
+    repo_branch: str | None = None
     dir: str | None = None
     functions_dir: str | None = None
     cmd: str | None = None
@@ -92,24 +93,11 @@ class SiteRepoInfo(BaseModel):
     stop_builds: bool | None = None
 
 
-class MinifyOptions(BaseModel):
-    bundle: bool
-    minify: bool
-
-
-class SiteProcessingSettingsImages(BaseModel):
-    optimize: bool
-
-
 class SiteProcessingSettingsHtml(BaseModel):
     pretty_urls: bool
 
 
 class SiteProcessingSettings(BaseModel):
-    skip: bool | None = None
-    css: MinifyOptions | None = None
-    js: MinifyOptions | None = None
-    images: SiteProcessingSettingsImages | None = None
     html: SiteProcessingSettingsHtml | None = None
 
 
@@ -120,6 +108,8 @@ class Site(BaseModel):
     name: str
     custom_domain: str | None = None
     domain_aliases: list[str]
+    branch_deploy_custom_domain: str | None = None
+    deploy_preview_custom_domain: str | None = None
     password: str | None = None
     notification_email: str | None = None
     url: str
@@ -135,23 +125,40 @@ class Site(BaseModel):
     managed_dns: bool
     deploy_url: str
     published_deploy: SiteDeploy | None
+    account_id: str | None = None
     account_name: str
     account_slug: str
     git_provider: str | None = None
     deploy_hook: str | None = None
-    capabilities: dict[str, Any]
-    processing_settings: SiteProcessingSettings
-    build_settings: SiteRepoInfo
+    capabilities: dict[str, Any] | None = None
+    processing_settings: SiteProcessingSettings | None = None
+    build_settings: SiteRepoInfo | None = None
     id_domain: str
     default_hooks_data: DefaultHooksData | None = None
     build_image: str
     prerender: str | None = None
+    functions_region: str | None = None
+    prevent_non_git_prod_deploys: bool | None = None
 
 
 class CreateSiteRequest(BaseModel):
+    state: str | None = None
+    plan: str | None = None
     name: str | None = None
     custom_domain: str | None = None
+    domain_aliases: list[str] | None = None
+    branch_deploy_custom_domain: str | None = None
+    deploy_preview_custom_domain: str | None = None
     password: str | None = None
+    notification_email: str | None = None
+    url: str | None = None
+    ssl_url: str | None = None
+    admin_url: str | None = None
+    screenshot_url: str | None = None
+    deploy_url: str | None = None
+    account_id: str | None = None
+    account_name: str | None = None
+    account_slug: str | None = None
     force_ssl: bool | None = None
     processing_settings: SiteProcessingSettings | None = None
     repo: SiteRepoInfo | None = None
