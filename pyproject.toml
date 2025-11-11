@@ -2,7 +2,7 @@
 name = "netlify-python"
 description = "Bare-bones python library for the official Netlify API"
 authors = [
-  { name="Chris Brousseau", email="cbrews@users.noreply.github.com" }
+  { name="cbrews", email="cbrews@users.noreply.github.com" }
 ]
 readme = "README.md"
 license = { text = "MIT" }
