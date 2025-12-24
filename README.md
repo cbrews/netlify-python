@@ -40,6 +40,8 @@ client.get_current_user() # Get current user information
 client.create_site_deploy('site-id', 'path/to/zip/file.zip')
 ```
 
+Note that all types are exposed via py.typed so if you are setup with a Pylance server or are using mypy/ty, you can get types automatically from the objects in this library.
+
 ### API
 
 ⚠ This client is currently expanding its API support, more documentation coming soon here.
