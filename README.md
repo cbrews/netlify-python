@@ -46,27 +46,27 @@ client.create_site_deploy('site-id', 'path/to/zip/file.zip')
 
 ## For Developers
 
-This section is for developers who want to improve this library.  The default development version is on 3.10.4 but we are currently supporting all python versions >= 3.10
+This section is for developers who want to improve this library.  The default development version is on 3.14 but we are currently supporting all python versions >= 3.10
 
 ### Development Dependencies
 
-Make sure that you have [`pyenv`](https://github.com/pyenv/pyenv).  You can test this by checking your python version after opening this directory.
+Make sure that you have [`pyenv`](https://github.com/pyenv/pyenv).  You can test this by checking your python version after opening this directory. 
+If you need to target a specific version of python you should overwrite your `.python-version` file and ensure you have the specific version installed.
 
 ```bash
-$ python --version
-Python 3.10.4
+python --version
 ```
 
 Make sure your active python version has `virtualenv` setup via:
 
 ```bash
-$ python -m pip install virtualenv
+python -m pip install virtualenv
 ```
 
 Create and activate your venv
 ```bash
-$ python -m venv venv
-$ . venv/bin/activate
+python -m venv venv
+. venv/bin/activate
 ```
 
 ### Starting development
@@ -75,15 +75,23 @@ Everything here out should be in the venv.
 
 Install your dependencies:
 ```bash
-$ pip install .[dev]
+pip install .[dev]
 ```
 
 Setup pre-commits:
 ```bash
-$ pre-commit install
+pre-commit install
 ```
 
 You should be good to go now.
+
+### Running tests
+
+Tests are supported via pytest:
+
+```bash
+pytest
+```
 
 ### Building the package
 Get your build dependencies in place:
