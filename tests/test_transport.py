@@ -26,9 +26,10 @@ def test_transport_build_headers(transport: NetlifyTransport) -> None:
     assert transport._build_headers({"User-Agent": "override-user-agent"}) == {
         "User-Agent": "override-user-agent"
     }
-    assert transport._build_headers(
-        {"User-Agent": "override-user-agent", "new-header": "abc"}
-    ) == {"User-Agent": "override-user-agent", "new-header": "abc"}
+    assert transport._build_headers({
+        "User-Agent": "override-user-agent",
+        "new-header": "abc",
+    }) == {"User-Agent": "override-user-agent", "new-header": "abc"}
 
 
 def test_transport_build_timeout(transport: NetlifyTransport) -> None:
