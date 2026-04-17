@@ -101,6 +101,9 @@ exclude_lines = [
 [tool.ruff]
 line-length = 88
 
+[tool.ruff.format]
+preview = true
+
 [tool.ruff.lint]
 select = [
   "E",   # pycodestyle errors
