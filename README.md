@@ -61,7 +61,7 @@ This client has minimal support for Netlify APIs based on community need.  The f
 | `get_current_user()` | `GET` | `/api/v1/user` |
 | `create_site(request: CreateSiteRequest)`   | `POST` | `/api/v1/sites` |
 | `list_sites()`         | `GET` | `/api/v1/sites` |
-| `get_site(site_id: str)` | `GET` | `/sites/{site_id}` |
+| `get_site(site_id: str)` | `GET` | `/api/v1/sites/{site_id}` |
 | `delete_site(site_id: str)` | `DELETE` | `/api/v1/sites/{site_id}` |
 | `create_site_in_team(account_slug: str, request: CreateSiteRequest)` | `POST` |  `/api/v1/{account_slug}/sites` |
 | `list_site_files(site_id: str)` |  `GET` |  `/api/v1/sites/{site_id}/files` |
